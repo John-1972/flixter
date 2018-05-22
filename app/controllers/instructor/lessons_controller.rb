@@ -26,7 +26,7 @@ class Instructor::LessonsController < ApplicationController
   end
 
   def current_lesson
-    @current_lesson ||= Lesson.find(params[:id])
+    @current_lesson ||= Lesson.find(params[:id]) # Store id of current lesson in an instance var
   end
 
   def require_authorized_for_current_section
