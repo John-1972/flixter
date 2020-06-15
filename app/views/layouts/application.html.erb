@@ -10,66 +10,67 @@
   </head>
 
   <body>
-    <div id="flex-content-container">
-      <nav class="navbar navbar-expand-md navbar navbar-dark bg-light">
+    <div id="flex-content-container"> <!-- User-defined container -->
+      <nav class="navbar navbar-expand-md navbar-dark bg-light"> <!-- Navbar switches between link buttons & menu at width "md", navbar-dark = light text, bg-light = light bckgrnd -->
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#">Flixter</a>
+          <span class="navbar-toggler-icon"></span> <!-- Button for dropdown menu of links -->
+        </button> <!-- class="navbar-toggler" -->
 
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-          <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-            <li class="nav-item">
-              <%= link_to 'See All Courses', courses_path, class: 'nav-link' %>
-            </li>
-          </ul>
+        <a class="navbar-brand" href="#">Flixter</a> <!-- Company logo at LH end of navbar -->
 
-          <ul class="navbar-nav">
-            <% if user_signed_in? %>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02"> <!-- Navbar contents -->
+          <ul class="navbar-nav mr-auto mt-2 mt-md-0"> <!-- First group of nav items (LHS) -->
+            <li class="nav-item"> <!-- Link within group -->
+              <%= link_to 'See All Courses', courses_path, class: 'nav-link' %> <!-- RoR path -->
+            </li> <!-- class="nav-item" -->
+          </ul> <!-- End of first group -->
+
+          <ul class="navbar-nav"> <!-- Second group of nav items (RHS) -->
+            <% if user_signed_in? %> <!-- If user is signed in, show these links... -->
               <li class="nav-item">
                 <%= link_to 'My Dashboard', dashboard_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
               </li>
-            <% else %>
+            <% else %> <!-- If not signed in, show these links... -->
               <li class="nav-item">
                 <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
               </li>
-            <% end %>
-          </ul>
+            <% end %> <!-- end if -->
+          </ul> <!-- End of second group -->
 
-          <form class="form-inline my-2 my-lg-0">
+          <form class="form-inline my-2 my-lg-0"> <!-- Mini-form in the navbar -->
             <input class="form-control mr-sm-2" type="text" placeholder="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
-        </div>
-      </nav>
+        </div> <!-- class="collapse navbar-collapse" -->
+      </nav> <!-- class="navbar" -->
 
-      <% if notice.present? %>
+      <% if notice.present? %> <!-- "Please sign in" alerts appear directly beneath navbar -->
         <p class="alert alert-info"><%= notice %></p>
       <% end %>
       <% if alert.present? %>
         <p class="alert alert-danger"><%= alert %></p>
       <% end %>
 
-      <%= yield %>
-    </div>
+      <%= yield %> <!-- *** Insert point for HTML code *** -->
+    </div> <!-- id="flex-content-container" -->
 
     <div id="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-sm-3">
+      <div class="container"> <!-- Bootstrap compulsory container -->
+        <div class="row"> <!-- Create a row, then fill it with columns -->
+          <div class="col-12 col-sm-3"> <!-- 1st column, 12/12 for "xs", 3/12 for "sm" -->
             <b>Teachers</b>
             <br />
             <%= link_to 'Teach a Course', new_instructor_course_path %>
             <br />
             <%= link_to 'My Dashboard', dashboard_path %>
-          </div>
-          <div class="col-12 col-sm-3">
+          </div> <!-- 1st column -->
+          <div class="col-12 col-sm-3"> <!-- 2nd column, 12/12 for "xs", 3/12 for "sm" -->
             <b>About</b>
             <br />
             <%= link_to 'Team', team_path %>
@@ -77,8 +78,8 @@
             <%= link_to 'Careers', careers_path %>
             <br />
             <%= link_to 'Privacy Policy', privacy_path %>
-          </div>
-          <div class="col-12 col-sm-3">
+          </div> <!-- 2nd column -->
+          <div class="col-12 col-sm-3"> <!-- 3rd column, 12/12 for "xs", 3/12 for "sm" -->
             <b>Contact</b>
             <br />
             ken@thefirehoseproject.com
@@ -86,20 +87,20 @@
             One Kendall Square
             <br />
             Cambridge MA, 02113
-          </div>
-          <div class="col-12 col-sm-3 social">
+          </div> <!-- 3rd column -->
+          <div class="col-12 col-sm-3 social"> <!-- 4th col, 12/12 for "xs", 3/12 for "sm" -->
             <b>Social</b>
             <br />
             <br />
-            <%= link_to 'https://github.com/John-1972/' do %>
+            <%= link_to 'https://github.com/John-1972/' do %> <!-- Apply link to icon -->
               <span class="fa fa-github-square fa-2x social-button"></span>
             <% end %>
             <span class="fa fa-facebook-square fa-2x social-button"></span>
             <span class="fa fa-twitter-square fa-2x social-button"></span>
-          </div>
-        </div>
-      </div>
-    </div>
+          </div> <!-- 4th column, class="social" -->
+        </div> <!-- class="row" -->
+      </div> <!-- class="container" -->
+    </div> <!-- id="footer" -->
     
     <script src="http://vjs.zencdn.net/5.12.6/video.js"></script>
     <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
