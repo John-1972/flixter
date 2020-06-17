@@ -1,76 +1,76 @@
-<!-- The student course detail page -->
+<!-- HTML for course detail page (showing sections and lessons) -->
 <br />
 
-<div class="booyah-box col-10 offset-1">
+<div class="booyah-box col-10 offset-1"> <!-- Infobox, 10/12 of "xs" screens, 1/12 indent -->
   <h1><%= @course.title %></h1>
   <%= image_tag @course.image.url, class: 'img-fluid' %>
   <br />
-  <div class="row">
-    <div class="col-sm-4 col-12 text-center">
-      <span class="badge badge-default">
-        <%= number_to_currency @course.cost %>
+  <div class="row"> <!-- Create Bootstrap row first, then fill with columns -->
+    <div class="col-sm-4 col-12 text-center"> <!-- 12/12 of "xs" width, 4/12 of "sm" width -->
+      <span class="badge badge-secondary"> <!-- Badge = colored box, round corners, white text -->
+        <%= number_to_currency @course.cost %> <!-- Cost of course -->
       </span>
 
-      <% if current_user && current_user == @course.user %>
+      <% if current_user && current_user == @course.user %> <!-- If signed-in user = instructor -->
         <br />
         <br />
-        <%= link_to 'Administer', instructor_course_path(@course), class: 'btn btn-danger btn-large' %>
-      <% end %>
+        <%= link_to 'Administer', instructor_course_path(@course), class: 'btn btn-danger btn-large' %> <!-- ...then display admin button for this course -->
+      <% end %> <!-- end if -->
 
       <br />
       <br />
       
-      <% if current_user %>
-        <% if current_user.enrolled_in?(@course) %>
-          <h3 class="badge badge-info">You Are Enrolled!</h3>
-        <% else %>
-          <% if @course.free? %>
-            <%= link_to 'Enroll', course_enrollments_path(@course), class: 'btn btn-primary', method: :post %>
-          <% else %>
+      <% if current_user %> <!-- If a user is signed in... -->
+        <% if current_user.enrolled_in?(@course) %> <!-- and they have enrolled on this course -->
+          <h3 class="badge badge-info">You Are Enrolled!</h3> <!-- then confirm enrollment -->
+        <% else %> <!-- But if they haven't enrolled... -->
+          <% if @course.free? %> <!-- ...and the course costs nothing... -->
+            <%= link_to 'Enroll', course_enrollments_path(@course), class: 'btn btn-primary', method: :post %> <!-- ...then display an enroll button -->
+          <% else %> <!-- But if the course does cost money... -->
             <%= form_tag course_enrollments_path(@course) do %>
-              
+            <!-- ...then display a payment btn... -->  
               <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                       data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
                       data-email="<%= current_user.email %>"
                       data-description="<%= @course.title %> (<%= number_to_currency @course.cost %>)"
                       data-amount="<%= (@course.cost * 100).to_i %>"
                       data-locale="auto"></script>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <h3 class="badge badge-info">Sign In to Enroll!</h3>
-      <% end %>
-    </div>
+            <% end %> <!-- end course_enrollments_path -->
+          <% end %> <!-- end if -->
+        <% end %> <!-- end if -->
+      <% else %> <!-- but if user isn't signed in... -->
+        <h3 class="badge badge-info">Sign In to Enroll!</h3> <!-- encourage them to sign in -->
+      <% end %> <!-- end if -->
+    </div> <!-- class="col-sm-4 col-12" -->
 
-    <div class="col-sm-8 col-12">
+    <div class="col-sm-8 col-12"> <!-- 12/12 of "xs" width, 8/12 of "sm" width -->
       <%= @course.description %>
     </div>
-  </div>
+  </div> <!-- class="row" -->
 
-  <div class="col-12">
-    <% @course.sections.rank(:row_order).each do |section| %>
+  <div class="col-12"> <!-- 12/12 of screen width. No "row", as only one column -->
+    <% @course.sections.rank(:row_order).each do |section| %> <!-- Loop through each section -->
       <br /> <br />
-      <div class="section">
+      <div class="section"> <!-- Begin a "section" division -->
         <h3>
-          <%= section.title %>
+          <%= section.title %> <!-- Display section title -->
         </h3>
-        <div class="row">
-          <% section.lessons.rank(:row_order).each do |lesson| %>
-            <div class="col-12 col-sm-6">
-              <div class="lesson text-center">
+        <div class="row"> <!-- Begin a Bootstrap row -->
+          <% section.lessons.rank(:row_order).each do |lesson| %><!--For each section's lessons-->
+            <div class="col-12 col-sm-6"> <!-- 12/12 of "xs", 6/12 for "sm" or larger -->
+              <div class="lesson text-center"> <!-- Begin a "lesson" division -->
                 <br />
-                <%= link_to lesson_path(lesson) do %>
-                  <b><%= lesson.title %></b>
+                <%= link_to lesson_path(lesson) do %> <!-- Link to lesson for both... -->
+                  <b><%= lesson.title %></b> <!-- Title -->
                   <br />
-                  <%= lesson.subtitle %>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <br class="clr" />
-      </div>
-    <% end %>    
-  </div>  
-</div>
+                  <%= lesson.subtitle %> <!-- Subtitle -->
+                <% end %> <!-- End of link -->
+              </div> <!-- class="lesson" -->
+            </div> <!-- class="col-12 col-sm-6" -->
+          <% end %> <!-- end lesson loop -->
+        </div> <!-- class="row" -->
+        <br class="clr" /> <!-- clearfix -->
+      </div> <!-- class="section" -->
+    <% end %> <!-- end section loop -->
+  </div> <!-- class="col-12" -->
+</div> <!-- class="booyah-box" -->

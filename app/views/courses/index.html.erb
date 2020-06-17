@@ -1,21 +1,22 @@
+<!-- HTML for course index page (list of courses) -->
 <br />
 
-<div class="booyah-box col-10 offset-1">
+<div class="booyah-box col-10 offset-1"> <!-- Infobox, 10/12 of width, 1/12 indent -->
   <h1 class="text-center">Learn something today</h1>
   <hr />
 
-  <% @courses.each do |course| %>
-    <h2 class="text-center"><%= link_to course.title, course_path(course) %></h2>
-    <%= image_tag course.image.url, class: 'img-fluid text-center' %>
+  <% @courses.each do |course| %> <!-- Rails loops through all courses -->
+    <h2 class="text-center"><%= link_to course.title, course_path(course) %></h2><!--Title/link-->
+    <%= image_tag course.image.url, class: 'img-fluid text-center' %> <!-- Course img -->
     <br />
-    <div class="row">
-      <div class="col-sm-8 col-12">
+    <div class="row"> <!-- Create a Bootstrap row, then fill with columns -->
+      <div class="col-sm-8 col-12"> <!-- 12/12 of "xs" screens, 8/12 of "sm" screens -->
         <%= course.description %>
       </div>
-      <div class="col-sm-4 col-12 text-center">
+      <div class="col-sm-4 col-12 text-center"> <!-- 12/12 of "xs", 4/12 of "sm" screens -->
         <%= link_to 'More Details...', course_path(course), class: 'btn btn-primary btn-large' %>
       </div>
-    </div>
+    </div> <!-- class="row" -->
     <br class="clr" />
-  <% end %>
-</div>
+  <% end %> <!-- end loop -->
+</div> <!-- class="booyah-box" -->
