@@ -1,44 +1,47 @@
+<!-- HTML for user/instructor dashboard -->
 <br />
 
-<div class="booyah-box col-10 offset-1">
+<div class="booyah-box col-10 offset-1"> <!-- Infobox, 10/12 of all screens, 1/12 indent -->
   <h1>What I'm Learning</h1>
-  <% current_user.enrolled_courses.each do |course| %>
+  <% current_user.enrolled_courses.each do |course| %> <!-- Loop thru user's enrolled courses -->
     <h3 class="text-center">
-      <%= link_to course.title, course_path(course) %> 
+      <%= link_to course.title, course_path(course) %> <!-- Link to course -->
     </h3>
     <br />
-    <%= image_tag course.image.url, class: 'img-fluid' %>
+    <%= image_tag course.image.url, class: 'img-fluid' %> <!-- Course image -->
     <br />
-    <div class="row">
-      <div class="col-12 col-sm-8">
+    <div class="row"> <!-- Create Bootstrap row, fill with columns -->
+      <div class="col-12 col-sm-8"> <!-- 12/12 of "xs" screen, 8/12 of "sm" screen -->
         <%= course.description %>
       </div>
-      <div class="col-12 col-sm-4 text-center">
+      <div class="col-12 col-sm-4 text-center"> <!-- 12/12 of "xs", 4/12 of "sm" screen -->
         <%= link_to "More Info...", course_path(course), class: 'btn btn-lg btn-primary' %>
+        <!-- Link to course detail page -->
       </div>
-    </div>
-    <hr class="col-8 offset-2">
-    <br class="clr" />
-  <% end %>
+    </div> <!-- class="row" -->
+    <hr class="col-8 offset-2"> <!-- Horizontal rule, 8/12 of screen width, 2/12 indent -->
+    <br class="clr" /> <!-- clearfix -->
+  <% end %> <!-- end enrolled_courses loop -->
 
   <h1>What I'm Teaching</h1>
-  <% current_user.courses.each do |course| %>
+  <% current_user.courses.each do |course| %> <!-- Loop through user's created courses -->
     <h3 class="text-center">
-      <%= link_to course.title, course_path(course) %>
+      <%= link_to course.title, course_path(course) %> <!-- Link to course -->
     </h3>
     <br />
-    <%= image_tag course.image.url, class: 'img-fluid' %>
+    <%= image_tag course.image.url, class: 'img-fluid' %> <!-- Course image -->
     <br />
-    <div class="row">
-      <div class="col-12 col-sm-8">
+    <div class="row"> <!-- Create Bootstrap row, fill with columns -->
+      <div class="col-12 col-sm-8"> <!-- 12/12 of "xs" screen, 8/12 of "sm" screen -->
         <%= course.description %>
       </div>
 
-      <div class="col-12 col-sm-4 text-center">
+      <div class="col-12 col-sm-4 text-center"> <!-- 12/12 of "xs", 4/12 of "sm" screen -->
         <%= link_to "More Info...", course_path(course), class: 'btn btn-lg btn-primary' %>
+        <!-- Link to course detail page -->
       </div>
-    </div>
-    <hr class="col-8 offset-2">
-    <br class="clr" />
-  <% end %>
-</div>
+    </div> <!-- class="row" -->
+    <hr class="col-8 offset-2"> <!-- Horizontal rule, 8/12 of screen width, 2/12 indent -->
+    <br class="clr" /> <!-- clearfix -->
+  <% end %> <!-- end created courses loop -->
+</div> <!-- class="booyah-box" -->
