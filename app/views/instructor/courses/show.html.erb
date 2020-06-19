@@ -1,9 +1,9 @@
 <!-- The instructor course overview page -->
 <script>
   $(function() {
-    $('.new-lesson-button').click(function( event ) {
+    $('.new-lesson-button').click(function( event ) { /* 'new-lesson-button' click handler */
       var lessonUrl = $(event.target).data('lesson-url');
-      $('#newLessonForm').attr('action', lessonUrl);
+      $('#newLessonForm').attr('action', lessonUrl); /* See lesson modal, line 119 */
     });
 
     $('.lessons').sortable({
@@ -27,108 +27,107 @@
         });
       }
     });
-  });
+  }); /* Overall, encompassing function */
 </script>
 
 <br />
-<div class="booyah-box col-10 offset-1">
-  <h1 class="text-center"><%= current_course.title %></h1>
-  <%= image_tag current_course.image.url, class: 'img-fluid' %>
+<div class="booyah-box col-10 offset-1"><!--Infobox holds everything, 10/12 width, 1/10 indent-->
+  <h1 class="text-center"><%= current_course.title %></h1> <!-- Course title -->
+  <%= image_tag current_course.image.url, class: 'img-fluid' %> <!-- Course image -->
   <br />
-  <%= link_to 'Preview as student...', course_path(current_course), class: 'btn btn-warning float-right' %>
-  <br class="clr" />
+  <%= link_to 'Preview as student...', course_path(current_course), class: 'btn btn-warning float-right' %> <!-- Preview btn appears to the bottom-right of the course image -->
+  <br class="clr" /> <!-- clearfix -->
 
-  <div class="text-center">
-    <!-- Button trigger modal -->
+  <div class="text-center"> <!-- "Add new section" button, triggers section modal -->
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newSectionModal">
       Add a new section...
     </button>
-  </div>
+  </div> <!-- class="text-center" -->
 
-  <ul class="sections">
-    <% current_course.sections.rank(:row_order).each do |section| %>
+  <ul class="sections"> <!-- Unordered list = sequence of boxes containing course sections -->
+    <% current_course.sections.rank(:row_order).each do |section| %><!--Loop thru sections-->
       <li data-update-url="<%= instructor_section_path(section) %>" class="section-li">
         <div class="header float-left">
-          <span class="fa fa-ellipsis-v"></span>
-          <%= section.title %>
-        </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-lg float-right new-lesson-button" data-toggle="modal" data-target="#newLessonModal" data-lesson-url="<%= instructor_section_lessons_path(section) %>">
+          <span class="fa fa-ellipsis-v"></span> <!-- Vertical ellipsis icon -->
+          <%= section.title %> <!-- Section title -->
+        </div> <!-- class="header float-left" -->
+        <button type="button" class="btn btn-primary btn-lg float-right new-lesson-button" data-toggle="modal" data-target="#newLessonModal" data-lesson-url="<%= instructor_section_lessons_path(section) %>"><!-- Btn to trgr "new lesson" modal -->
           New Lesson...
-        </button>
+        </button> <!-- "new-lesson-button" linked to JavaScript event handler -->
 
         <br class="clr" />
-        <br class="clr" />
-        <ul class="lessons">
-          <% section.lessons.rank(:row_order).each do |lesson| %>
-            <li data-update-url="<%= instructor_lesson_path(lesson) %>">
-              <div class="row">
-                <div class="col-1">
+        <br class="clr" /> <!-- Line breaks with clearfix -->
+        <ul class="lessons"> <!-- Unordered list = sequence of boxes containing lessons -->
+          <% section.lessons.rank(:row_order).each do |lesson| %><!-- Loop thru lessons -->
+            <li data-update-url="<%= instructor_lesson_path(lesson) %>"><!--Each lesson=li-->
+              <div class="row"> <!-- Create bootstrap row, then fill with columns -->
+                <div class="col-1"> <!-- 1/12 of width -->
                   <br />
-                  <span class="fa fa-ellipsis-v"></span>
-                </div>
-                <div class="col-11 text-center">
+                  <span class="fa fa-ellipsis-v"></span> <!-- Vertical ellipsis symbol -->
+                </div> <!-- class="col-1" -->
+                <div class="col-11 text-center"> <!-- 11/12 of width, centered text -->
                   <p>
                     <b><%= lesson.title %></b>
                   </p>
                   <p>
                     <%= lesson.subtitle %>
                   </p>
-                </div>
-              </div>
-              <br class="clr" />
-            </li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
-</div>
+                </div> <!-- class="col-11" -->
+              </div> <!-- class="row" -->
+              <br class="clr" /> <!-- clearfix -->
+            </li> <!-- End of each lesson -->
+          <% end %> <!-- End of lesson loop -->
+        </ul> <!-- End of lesson sequence -->
+      </li> <!-- class="section-li" -->
+    <% end %> <!-- End of section loop -->
+  </ul> <!-- End of section sequence -->
+</div> <!-- End of infobox container -->
 
-<!-- Section Modal -->
-<div class="modal fade" id="newSectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
+<!-- "New Section" Modal -->
+<div class="modal fade" id="newSectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <!-- New modal, fades in and out -->
+  <div class="modal-dialog" role="document"> <!-- Outer container -->
+    <div class="modal-content"> <!-- Inner container -->
+      <div class="modal-header"> <!-- First of three -->
+        <h4 class="modal-title" id="newSectionModalLabel">Add a new section</h4> <!-- Title -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
+          <span aria-hidden="true">×</span> <!-- "x" closes the modal -->
         </button>
-        <h4 class="modal-title" id="newSectionModalLabel">Add a new section</h4>
-      </div>
+      </div> <!-- class="modal-header" -->
       <%= simple_form_for @section, url: instructor_course_sections_path(current_course) do |f| %>
-        <div class="modal-body">
-            <%= f.input :title %>
-        </div>
-        <div class="modal-footer">
+        <div class="modal-body"> <!-- Second of three -->
+            <%= f.input :title %> <!-- Enter name of course section -->
+        </div> <!-- class="modal-body" -->
+        <div class="modal-footer"> <!-- Third of three -->
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <%= f.submit "Add a section", class: 'btn btn-primary' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+        </div> <!-- class="modal-footer" -->
+      <% end %> <!-- End of form code -->
+    </div> <!-- class="modal-content" -->
+  </div> <!-- class="modal-dialog" -->
+</div> <!-- class="modal fade" -->
 
-<!-- Lesson Modal -->
-<div class="modal fade" id="newLessonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+<!-- "New Lesson" Modal -->
+<div class="modal fade" id="newLessonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <!-- New modal, fades in and out -->
+  <div class="modal-dialog" role="document"> <!-- Outer container -->
+    <div class="modal-content"> <!-- Inner container -->
+      <div class="modal-header"> <!-- First of three -->
         <h4 class="modal-title" id="newLessonModalLabel">Add a new lesson</h4>
-      </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span> <!-- "x" closes the modal -->
+        </button>
+      </div> <!-- class="modal-header" -->
       <%= simple_form_for @lesson, url: "#", html: {id: 'newLessonForm'} do |f| %>
-        <div class="modal-body">
+      <!-- '#newLessonForm' referenced in JavaScript event handler -->
+        <div class="modal-body"> <!-- Second of three -->
           <%= f.input :title %>
           <%= f.input :subtitle %>
           <%= f.input :video %>
-        </div>
-        <div class="modal-footer">
+        </div> <!-- class="modal-body" -->
+        <div class="modal-footer"> <!-- Third of three -->
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <%= f.submit "Add the lesson", class: 'btn btn-primary' %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+        </div> <!-- class="modal-footer" -->
+      <% end %> <!-- End of form code -->
+    </div> <!-- class="modal-content" -->
+  </div> <!-- class="modal-dialog" -->
+</div> <!-- class="modal fade" -->
