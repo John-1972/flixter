@@ -60,7 +60,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
-gem 'rack', '~> 2.2', '>= 2.2.3'
+gem 'rack', '~> 2.2'
 gem 'simple_form'
 gem 'devise', '>= 4.6.0'
 
